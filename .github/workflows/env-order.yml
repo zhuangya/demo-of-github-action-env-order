@@ -1,0 +1,24 @@
+---
+
+name: ENV order
+
+on: push
+
+jobs:
+  reveal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: with step env
+        env:
+          FOO: by_yaml
+        run: sh ./reveal.sh
+      - name: without step env
+        run: sh ./reveal.sh
+      - run: echo "::set-env name=FOO::magic"
+      - name: with step env after magic
+        env:
+          FOO: by_yaml
+        run: sh ./reveal.sh
+      - name: without step env after magic
+        run: sh ./reveal.sh
